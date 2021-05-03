@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @image.description %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @image.user_id %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @image.price %>
+</p>
+
+<p>
+  <strong>Discount:</strong>
+  <%= @image.discount %>
+</p>
+
+<p>
+  <strong>Tags:</strong>
+  <%= @image.tags %>
+</p>
+
+<p>
+  <strong>Private:</strong>
+  <%= @image.private %>
+</p>
+
+<div>
+  <%= image_tag @image.main_image %>
+</div>
+
+
+<%= link_to 'Edit', edit_image_path(@image) %> |
+<%= link_to 'Back', images_path %>
