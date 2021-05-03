@@ -26,8 +26,7 @@ class ImagesController < ApplicationController
     @image = Image.new(image_params)
 
     @image.user = current_user
-    puts("CREATING IMAGE--------")
-    puts(image_params)
+
 
     respond_to do |format|
       if @image.save
@@ -73,6 +72,6 @@ class ImagesController < ApplicationController
     end
     # Only allow a list of trusted parameters through.
     def image_params
-      params.require(:image).permit(:description, :user_id, :price, :discount, :tags, :private, :main_image)
+      params.require(:image).permit(:description, :user_id, :price, :discount, :tags, :private, :main_image, :inventory)
     end
 end
