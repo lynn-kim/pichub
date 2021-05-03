@@ -1,7 +1,7 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: %i[ show edit update destroy ]
 
-  before_action :set_user, only: [:index, :show, :new, :edit]
+  before_action :set_user, only: [:index, :show, :new, :edit, :destroy_all ]
   # GET /images or /images.json
   def index
     @images = Image.all
@@ -9,7 +9,7 @@ class ImagesController < ApplicationController
 
   # GET /images/1 or /images/1.json
   def show
-    
+
   end
 
   # GET /images/new
@@ -66,6 +66,14 @@ class ImagesController < ApplicationController
     @image.destroy
     respond_to do |format|
       format.html { redirect_to images_url, notice: "Image was successfully destroyed." }
+      format.json { head :no_content }
+    end
+  end
+
+  def destroy_all
+    Image.where(user_id: current_user.id).destroy_all
+    respond_to do |format|
+      format.html { redirect_to images_url, notice: "Images were successfully destroyed." }
       format.json { head :no_content }
     end
   end
