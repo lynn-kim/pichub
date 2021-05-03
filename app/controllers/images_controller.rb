@@ -27,6 +27,15 @@ class ImagesController < ApplicationController
 
     @image.user = current_user
 
+    if @image.discount == nil
+      @image.discount = 0
+    end
+    if @image.price == nil
+      @image.price = 0
+    end
+    if @image.inventory == nil
+      @image.inventory = 1
+    end
 
     respond_to do |format|
       if @image.save
