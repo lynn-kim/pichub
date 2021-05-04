@@ -39,6 +39,7 @@
   <%= image_tag @image.main_image %>
 </div>
 
-
-<%= link_to 'Edit', edit_image_path(@image) %> |
+<% if @current_user.id == @image.user_id %>
+  <%= link_to 'Edit', edit_image_path(@image) %> |
+<% end %>
 <%= link_to 'Back', images_path %>

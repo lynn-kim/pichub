@@ -1,7 +1,15 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: %i[ show edit update destroy ]
-  before_action :set_user, only: [:index, :show, :new, :edit, :destroy_all ]
+  before_action :set_user, only: [:redirect, :index, :show, :new, :edit, :update, :destroy, :destroy_all ]
+  before_action :redirect, only: [:edit, :update, :destroy]
 
+  def redirect 
+    if @current_user.id != @image.user_id
+      flash[:error] = "Access required."
+      redirect_to images_url
+    end
+  end
+  
   # GET /images or /images.json
   def index
     @public_images = Image.where(private: false).where.not(user_id: current_user)
@@ -25,6 +33,8 @@ class ImagesController < ApplicationController
 
   # POST /images or /images.json
   def create
+    byebug
+
     @image = Image.new(image_params)
 
     @image.user = current_user
@@ -52,23 +62,37 @@ class ImagesController < ApplicationController
 
   # PATCH/PUT /images/1 or /images/1.json
   def update
-    respond_to do |format|
-      if @image.update(image_params)
-        format.html { redirect_to @image, notice: "Image was successfully updated." }
-        format.json { render :show, status: :ok, location: @image }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @image.errors, status: :unprocessable_entity }
+    if @current_user.id == @image.user_id
+      respond_to do |format|
+        if @image.update(image_params)
+          format.html { redirect_to @image, notice: "Image was successfully updated." }
+          format.json { render :show, status: :ok, location: @image }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @image.errors, status: :unprocessable_entity }
+        end
       end
-    end
+    else 
+      respond_to do |format|
+        format.html { redirect_to images_url, notice: "You are not allowed to edit this image." }
+        format.json { head :no_content }
+      end
+    end 
   end
 
   # DELETE /images/1 or /images/1.json
   def destroy
-    @image.destroy
-    respond_to do |format|
-      format.html { redirect_to images_url, notice: "Image was successfully destroyed." }
-      format.json { head :no_content }
+    if @current_user.id == @image.user_id
+      @image.destroy
+      respond_to do |format|
+        format.html { redirect_to images_url, notice: "Image was successfully destroyed." }
+        format.json { head :no_content }
+      end
+    else 
+      respond_to do |format|
+        format.html { redirect_to images_url, notice: "You are not allowed to delete this image." }
+        format.json { head :no_content }
+      end
     end
   end
 

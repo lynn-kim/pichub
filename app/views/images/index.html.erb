@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Images</h1>
+<input placeholder="search"/>
 <h2>Public</h2>
 <table>
   <thead>
@@ -26,8 +27,6 @@
         <td><%= image.tags %></td>
         <td><%= image.private %></td>
         <td><%= link_to 'Show', image %></td>
-        <td><%= link_to 'Edit', edit_image_path(image) %></td>
-        <td><%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
