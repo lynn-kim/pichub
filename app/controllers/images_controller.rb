@@ -5,11 +5,10 @@ class ImagesController < ApplicationController
 
   def redirect 
     if @current_user.id != @image.user_id
-      flash[:error] = "Access required."
       redirect_to images_url
     end
   end
-  
+
   # GET /images or /images.json
   def index
     @public_images = Image.where(private: false).where.not(user_id: current_user)
@@ -33,8 +32,6 @@ class ImagesController < ApplicationController
 
   # POST /images or /images.json
   def create
-    byebug
-
     @image = Image.new(image_params)
 
     @image.user = current_user
