@@ -1,10 +1,12 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: %i[ show edit update destroy ]
-
   before_action :set_user, only: [:index, :show, :new, :edit, :destroy_all ]
+
   # GET /images or /images.json
   def index
-    @images = Image.all
+    @public_images = Image.where(private: false).where.not(user_id: current_user)
+    @user_images = Image.where(user_id: current_user.id)
+    @images = @public_images + @user_images
   end
 
   # GET /images/1 or /images/1.json
@@ -89,6 +91,6 @@ class ImagesController < ApplicationController
     end
     # Only allow a list of trusted parameters through.
     def image_params
-      params.require(:image).permit(:description, :user_id, :price, :discount, :tags, :private, :main_image, :inventory)
+      params.require(:image).permit(:description, :price, :discount, :tags, :private, :main_image, :inventory)
     end
 end
