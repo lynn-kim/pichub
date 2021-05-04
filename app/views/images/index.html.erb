@@ -1,7 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Images</h1>
-<input placeholder="search"/>
+
+<%= form_tag images_path, method: :get do %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag ("Search") %>
+<% end %> 
+
+
 <h2>Public</h2>    
 
 <div class="grid" >
@@ -23,7 +29,7 @@
 </div>
 
 <h2>Yours</h2>
-<%= link_to 'New Image', new_image_path %>
+
 <div class="grid" >
   <% @user_images.each do |image| %>
     <div class="img">
@@ -47,7 +53,7 @@
 
 <br>
 
-
+<%= link_to 'New Image', new_image_path %>
 <% if @images.length > 0 %>
   <%= link_to 'Destroy All', '/destroy_all', method: :delete, data: { confirm: 'Are you sure you want to delete all your images?' } %>
 <% end %>
