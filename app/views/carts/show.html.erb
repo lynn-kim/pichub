@@ -6,6 +6,19 @@
 </p>
 
 <p>
+  <strong>Items:</strong>
+  <table>
+  <% @cart_items.each do |item| %>
+    <tr>
+      <td> <%= image_tag item.main_image %> </td>
+      <td> <%= item.price %> </td>
+      <td> <%= link_to 'Remove from cart' %></td>
+    </tr>
+  <%end%>
+  </table>
+</p>
+
+<p>
   <strong>Total:</strong>
   <%= @cart.total %>
 </p>

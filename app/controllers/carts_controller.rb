@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
   before_action :set_cart
+  before_action :get_cart_items, only: [:show]
 
   # GET /carts or /carts.json
   def index
@@ -42,7 +43,14 @@ class CartsController < ApplicationController
   end
 
   def add_image
-    byebug
+    @image = Image.find(params[:image_id])
+    @image.carts << @cart
+    @image.inventory -= 1
+    @image.save
+    redirect_back(fallback_location: root_path)
+  end
+
+  def calculate_price
   end
 
   private
@@ -58,6 +66,9 @@ class CartsController < ApplicationController
       end
     end
 
+    def get_cart_items
+      @cart_items = @cart.images
+    end
     # Only allow a list of trusted parameters through.
     def cart_params
       params.require(:cart).permit(:total, :image_id)

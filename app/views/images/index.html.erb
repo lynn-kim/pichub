@@ -15,6 +15,9 @@
     <div class="img">
       <div>
         <%= image.description %>
+        <% if image.inventory > 0 %>
+          <%= image.inventory %>
+        <% end %>
       </div>
       <%= image_tag image.main_image %>
       <div>
