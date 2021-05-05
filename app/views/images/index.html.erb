@@ -19,10 +19,8 @@
       <%= image_tag image.main_image %>
       <div>
         <%= link_to 'Show', image %>
-        <% if @current_user.id == image.user_id %>
-          <%= link_to 'Edit', edit_image_path(image) %>
-          <%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %>
-        <%end%>
+        <%= link_to 'Add to cart', "/add_to_cart/#{image.id}", method: :patch, data: { confirm: "Add #{image.id} to cart?" } %>
+        
       </div>
     </div>
   <% end %>
@@ -52,7 +50,7 @@
 
 
 <br>
-
+<%= link_to 'My Cart', carts_path %>
 <%= link_to 'New Image', new_image_path %>
 <% if @images.length > 0 %>
   <%= link_to 'Destroy All', '/destroy_all', method: :delete, data: { confirm: 'Are you sure you want to delete all your images?' } %>

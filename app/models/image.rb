@@ -1,6 +1,7 @@
 class Image < ApplicationRecord
   belongs_to :user
   has_one_attached :main_image
+  has_and_belongs_to_many :carts
   validates :main_image, presence: true
 
   def self.public_images(search, current_user_id)
