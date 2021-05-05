@@ -14,7 +14,7 @@ class Image < ApplicationRecord
   def self.user_images(search, current_user_id)
     @user_images = Image.where(user_id: current_user_id)
     if search
-      @user_images = @user_images.where('description LIKE ?', "%#{search}%").or(@public_images.where('tags LIKE ?', "%#{search}%"))
+      @user_images = @user_images.where('description LIKE ?', "%#{search}%").or(@user_images.where('tags LIKE ?', "%#{search}%"))
     end
     @user_images
   end
