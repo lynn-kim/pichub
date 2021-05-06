@@ -61,7 +61,6 @@ class CartsController < ApplicationController
       else 
         @cart = Cart.new
         @cart.user_id = current_user.id
-        @cart.total = 0
         @cart.save
       end
     end
@@ -71,6 +70,6 @@ class CartsController < ApplicationController
     end
     # Only allow a list of trusted parameters through.
     def cart_params
-      params.require(:cart).permit(:total, :image_id)
+      params.require(:cart).permit(:image_id)
     end
 end
