@@ -61,7 +61,19 @@ class CartsController < ApplicationController
     end
   end
 
-
+  def remove_image
+    delete_query = "DELETE FROM carts_images WHERE image_id = #{params[:image_id]} AND ctid IN (SELECT ctid FROM carts_images WHERE image_id = 1 LIMIT 1)"
+    ActiveRecord::Base.connection.execute(delete_query)
+    if @cart.save 
+      @image = Image.find(params[:image_id])
+      @image.inventory += 1
+      @image.save
+      respond_to do |format|
+        format.html { redirect_back fallback_location: root_path, notice: "Image removed from cart" }
+        format.json { head :no_content }
+      end
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
