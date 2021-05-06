@@ -62,7 +62,7 @@ class CartsController < ApplicationController
   end
 
   def remove_image
-    delete_query = "DELETE FROM carts_images WHERE image_id = #{params[:image_id]} AND ctid IN (SELECT ctid FROM carts_images WHERE image_id = 1 LIMIT 1)"
+    delete_query = "DELETE FROM carts_images WHERE image_id = #{params[:image_id]} AND ctid IN (SELECT ctid FROM carts_images WHERE image_id = #{params[:image_id]} LIMIT 1)"
     ActiveRecord::Base.connection.execute(delete_query)
     if @cart.save 
       @image = Image.find(params[:image_id])
