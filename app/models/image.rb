@@ -3,6 +3,8 @@ class Image < ApplicationRecord
   has_one_attached :main_image
   has_and_belongs_to_many :carts
   validates :main_image, presence: true
+  validates :discount, numericality: {only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100}
+  validates :price, numericality: {greater_than_or_equal_to: 0}
 
   def self.public_images(search, current_user_id)
     @public_images = Image.where(private: false).where.not(user_id: current_user_id)
