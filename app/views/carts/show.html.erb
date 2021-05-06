@@ -2,7 +2,7 @@
 
 <p>
   <strong>User:</strong>
-  <%= @cart.user_id %>
+  <%= @current_user.email %>
 </p>
 
 <p>
@@ -11,8 +11,8 @@
   <% @cart_items.each do |item| %>
     <tr>
       <td> <%= image_tag item.main_image %> </td>
-      <td> $<%= number_with_precision(item.price, precision: 2) %> </td>
-      <td> <%= link_to 'Remove from cart' %></td>
+      <td> $<%= number_with_precision((item.price * (1.00 - (item.discount/100.00))), precision: 2) %> </td>
+      <td> <%= link_to 'Remove from cart', "/remove_from_cart/#{item.id}" , method: :delete %></td>
     </tr>
   <%end%>
   </table>
@@ -20,7 +20,7 @@
 
 <p>
   <strong>Subtotal:</strong>
-  $<%= number_with_precision(@subtotal, precision: 2)  %>
+  $<%= number_with_precision(@subtotal, precision: 2) %>
 </p>
 
 <%= link_to 'Edit', edit_cart_path(@cart) %> |

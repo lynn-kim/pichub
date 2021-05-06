@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   root "images#index"
   delete '/destroy_all', to: 'images#destroy_all'
   patch '/add_to_cart/:image_id', to: 'carts#add_image'
+  delete '/remove_from_cart/:image_id', to: 'carts#remove_image'
 end

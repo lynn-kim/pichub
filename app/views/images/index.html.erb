@@ -15,20 +15,27 @@
     <div class="img">
       <div>
         <%= image.description %>
+      </div>
+      <div>
         <% if image.inventory > 0 %>
-          <%= image.inventory %>
+          <%= image.inventory %> in stock
         <% else %>
           <span>Out of stock :(</span>
         <% end %>
       </div>
       <%= image_tag image.main_image %>
       <div>
+        <span>$<%= number_with_precision(image.price, precision: 2)%></span>
+        <span>Discount: <%= image.discount %>%</span>
+      </div>
+      <div>
         <%= link_to 'Show', image %>
         <% if image.inventory > 0 %>
-          <%= link_to 'Add to cart', "/add_to_cart/#{image.id}", method: :patch, data: { confirm: "Add #{image.id} to cart?" } %>
+          <%= link_to 'Add to cart', "/add_to_cart/#{image.id}", method: :patch, data: { confirm: "Add image ##{image.id} to cart?" } %>
         <% end %>
-        <span>$<%= number_with_precision(image.price, precision: 2)%></span>
+        
       </div>
+  
     </div>
   <% end %>
 </div>
@@ -40,8 +47,10 @@
     <div class="img">
       <div>
         <%= image.description %>
+      </div>
+      <div>
         <% if image.inventory > 0 %>
-          <%= image.inventory %>
+          <%= image.inventory %> in stock
         <% else %>
           <span>Out of stock :(</span>
         <% end %>
@@ -50,13 +59,17 @@
         <%= image_tag image.main_image %>
       </div>
       <div>
+        <span>$<%= number_with_precision(image.price, precision: 2)%></span>
+        <% if image.discount %>
+          <span>Discount: <%= image.discount %>%</span>
+        <% end %>
+      </div>
+      <div>
         <%= link_to 'Show', image %>
         <% if @current_user.id == image.user_id %>
           <%= link_to 'Edit', edit_image_path(image) %>
           <%= link_to 'Delete', image, method: :delete, data: { confirm: 'Are you sure?' } %>
         <%end%>
-        <span>$<%= number_with_precision(image.price, precision: 2)%></span>
-        <span>Discount: <%= image.discount %>%</span>
       </div>
     </div> 
   <% end %>
