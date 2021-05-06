@@ -11,7 +11,7 @@
   <% @cart_items.each do |item| %>
     <tr>
       <td> <%= image_tag item.main_image %> </td>
-      <td> <%= item.price %> </td>
+      <td> $<%= number_with_precision(item.price, precision: 2) %> </td>
       <td> <%= link_to 'Remove from cart' %></td>
     </tr>
   <%end%>
@@ -19,7 +19,8 @@
 </p>
 
 <p>
-  <strong>Total:</strong>
+  <strong>Subtotal:</strong>
+  $<%= number_with_precision(@subtotal, precision: 2)  %>
 </p>
 
 <%= link_to 'Edit', edit_cart_path(@cart) %> |

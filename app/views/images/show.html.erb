@@ -12,7 +12,7 @@
 
 <p>
   <strong>Price:</strong>
-  <%= @image.price %>
+  <%= number_with_precision(@image.price, precision: 2) %>
 </p>
 
 <p>

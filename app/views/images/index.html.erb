@@ -17,13 +17,17 @@
         <%= image.description %>
         <% if image.inventory > 0 %>
           <%= image.inventory %>
+        <% else %>
+          <span>Out of stock :(</span>
         <% end %>
       </div>
       <%= image_tag image.main_image %>
       <div>
         <%= link_to 'Show', image %>
-        <%= link_to 'Add to cart', "/add_to_cart/#{image.id}", method: :patch, data: { confirm: "Add #{image.id} to cart?" } %>
-        
+        <% if image.inventory > 0 %>
+          <%= link_to 'Add to cart', "/add_to_cart/#{image.id}", method: :patch, data: { confirm: "Add #{image.id} to cart?" } %>
+        <% end %>
+        <span>$<%= number_with_precision(image.price, precision: 2)%></span>
       </div>
     </div>
   <% end %>
@@ -36,6 +40,11 @@
     <div class="img">
       <div>
         <%= image.description %>
+        <% if image.inventory > 0 %>
+          <%= image.inventory %>
+        <% else %>
+          <span>Out of stock :(</span>
+        <% end %>
       </div>
       <div>
         <%= image_tag image.main_image %>
@@ -44,8 +53,10 @@
         <%= link_to 'Show', image %>
         <% if @current_user.id == image.user_id %>
           <%= link_to 'Edit', edit_image_path(image) %>
-          <%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Delete', image, method: :delete, data: { confirm: 'Are you sure?' } %>
         <%end%>
+        <span>$<%= number_with_precision(image.price, precision: 2)%></span>
+        <span>Discount: <%= image.discount %>%</span>
       </div>
     </div> 
   <% end %>
@@ -56,7 +67,7 @@
 <%= link_to 'My Cart', carts_path %>
 <%= link_to 'New Image', new_image_path %>
 <% if @images.length > 0 %>
-  <%= link_to 'Destroy All', '/destroy_all', method: :delete, data: { confirm: 'Are you sure you want to delete all your images?' } %>
+  <%= link_to 'Delete All', '/destroy_all', method: :delete, data: { confirm: 'Are you sure you want to delete all your images?' } %>
 <% end %>
 <% if user_signed_in? %>
   <%= link_to('Logout', destroy_user_session_path, method: :delete) %>        

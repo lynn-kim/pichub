@@ -1,6 +1,6 @@
 class CartsController < ApplicationController
   before_action :set_cart
-  before_action :get_cart_items, only: [:show]
+  before_action :get_cart_items, only: [:show, :calculate_price]
 
   # GET /carts or /carts.json
   def index
@@ -9,6 +9,7 @@ class CartsController < ApplicationController
 
   # GET /carts/1 or /carts/1.json
   def show
+    @subtotal = calculate_price
   end
 
   # GET /carts/new
@@ -44,14 +45,22 @@ class CartsController < ApplicationController
 
   def add_image
     @image = Image.find(params[:image_id])
-    @image.carts << @cart
-    @image.inventory -= 1
-    @image.save
-    redirect_back(fallback_location: root_path)
+    if @image.inventory > 0 
+      @image.carts << @cart
+      @image.inventory -= 1
+      @image.save
+      respond_to do |format|
+        format.html { redirect_back fallback_location: root_path, notice: "Image added to cart" }
+        format.json { head :no_content }
+      end
+    else 
+      respond_to do |format|
+        format.html { redirect_back fallback_location: root_path, notice: "Image is out of stock" }
+        format.json { head :no_content }
+      end
+    end
   end
 
-  def calculate_price
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -72,4 +81,13 @@ class CartsController < ApplicationController
     def cart_params
       params.require(:cart).permit(:image_id)
     end
+
+    def calculate_price
+      @price = 0
+      @cart_items.each do |item|
+        @price += item.price * (1.00 - (item.discount / 100.00))
+      end
+      @price
+    end
+    
 end
