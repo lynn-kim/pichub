@@ -1,24 +1,28 @@
-# README
+# PicHub
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[Fall 2021 - Shopify Developer Intern Challenge](https://docs.google.com/document/d/1ZKRywXQLZWOqVOHC4JkF3LqdpO3Llpfk_CkZPR8bjak/edit#)
 
-Things you may want to cover:
+### Current features
 
-* Ruby version
+| Features                          | Have? |
+| --------------------------------- | :---: |
+| SEARCH by text/tags               |  ✅   |
+| SEARCH by characteristics         |       |
+| SEARCH for similar images         |       |
+| ADD one                           |  ✅   |
+| ADD bulk/enormous amounts         |       |
+| ADD private or public permissions |  ✅   |
+| DELETE one                        |  ✅   |
+| DELETE bulk/selected              |       |
+| DELETE all                        |  ✅   |
+| DELETE access control             |  ✅   |
+| DELETE secure deletion            |       |
+| SELL/BUY manage inventory         |  ✅   |
+| SELL/BUY set price                |  ✅   |
+| SELL/BUY discounts                |  ✅   |
+| SELL/BUY handle money             |       |
 
-* System dependencies
+### Notes
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- the app uses [devise](https://github.com/heartcombo/devise) for authentication
+- images are currently stored locally --> will want to change this to store in a cloud server (most likely Amazon S3)
